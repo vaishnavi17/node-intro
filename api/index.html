@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Home page</title>
+</head>
+
+<body>
+  <button>Get data</button>
+  <button id="add">Add data</button>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', getData);
+    function getData(e) {
+      $.ajax({
+        url: '/users',
+        method: 'GET',
+        success: function (data) {
+          console.log(data);
+        },
+
+        error: function (err) {
+          console.log('Failed');
+        }
+      });
+    } 
+  </script>
+
+  <script type="text/javascript">
+
+
+    const addbtn = document.getElementById('add');
+    addbtn.addEventListener('click', addData);
+    function addData(e) {
+      const newUser = {
+        name: 'zardoz',
+        age: 0,
+        occupation: '!',
+        married: false,
+        children: ['!']
+      };
+
+      $.ajax({
+        url: "/add",
+        type: "POST",
+        data: JSON.stringify(newUser),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+        },
+        error: function (err) {
+          console.log('Failed');
+        }
+      });
+    } 
+  </script>
+</body>
